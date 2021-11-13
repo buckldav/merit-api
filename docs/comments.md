@@ -1,3 +1,5 @@
+Limit of comments is 50 per Api Key.
+
 ```bash
 python manage.py createapikey Blog --email=<email>
 ```

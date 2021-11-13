@@ -31,9 +31,13 @@ class CommentViewSet(mixins.RetrieveModelMixin,
         serializer = CreateCommentSerializer(data=data)
 
         if serializer.is_valid():
-            serializer.save()
-            data = serializer.data
-            del data["blog_api_key"]
-            return Response(data, status=status.HTTP_201_CREATED)
+            obj = serializer.create(serializer.validated_data)
+            if obj is None:
+                return Response({"message": "Reached limit of comments to add."}, status=status.HTTP_403_FORBIDDEN)
+            else:
+                data = serializer.validated_data
+                del data["blog_api_key"]
+                data["post"] = data["post"].id
+                return Response(data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
