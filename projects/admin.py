@@ -3,7 +3,7 @@ from projects.models import Project
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'url', 'project_type')
+    list_display = ('title', 'author', 'project_type')
     list_filter = ('project_type', )
 
 
