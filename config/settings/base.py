@@ -75,7 +75,8 @@ LOCAL_APPS = [
     "blog",
     "library.users.apps.UsersConfig",
     "library.library",
-    "organizations"
+    "organizations",
+    "projects"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
