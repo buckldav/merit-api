@@ -14,7 +14,7 @@ class Project(models.Model):
 
     title = models.CharField(max_length=50)
     author = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(default="A project I made at Merit Academy.")
     url = models.URLField(max_length=200)
     project_type = models.CharField(
         max_length=20,
@@ -23,4 +23,4 @@ class Project(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return f"{self.title} - {self.author}"
