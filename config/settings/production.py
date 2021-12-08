@@ -8,6 +8,7 @@ import dj_database_url
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*.meritacademy.tech", "meritacademy.herokuapp.com"])
+CORS_ALLOWED_ORIGINS = ALLOWED_HOSTS
 
 # DATABASES
 # ------------------------------------------------------------------------------
