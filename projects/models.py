@@ -4,12 +4,14 @@ from django.db import models
 class Project(models.Model):
     GOOGLE_SITE = 'GOOG'
     REPL = 'REPL'
+    WEB_APP = 'APP'
     WEBGL_GAME = 'GAME'
     WEBSITE = 'SITE'
 
     TYPES = [
         ('GOOGLE_SITE', 'Google Site'),
         ('REPL', 'Repl Console App'),
+        ('WEB_APP', 'Web App'),
         ('WEBGL_GAME', 'WebGL Game'),
         ('WEBSITE', 'Website'),
     ]
