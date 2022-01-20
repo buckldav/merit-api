@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from library.library.api.views import library_schema_view
+from django.contrib.auth.views import LoginView
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -15,14 +17,16 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("library.users.urls", namespace="users")),
-    # path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
+    path("login/", LoginView.as_view(), name="login"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
 urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
+    # Library
+    path("api/library/", include("library.library.api.urls")),
+    path('library-swagger/', library_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
 ]
