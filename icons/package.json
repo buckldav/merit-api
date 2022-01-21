@@ -1,0 +1,29 @@
+{
+  "name": "merit-api",
+  "version": "1.0.0",
+  "description": "Merit Academy Tech APIs",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "faNames": "ts-node generateFaNames.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buckldav/merit-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buckldav/merit-api/issues"
+  },
+  "homepage": "https://github.com/buckldav/merit-api#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-common-types": "^0.2.36",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5",
+    "typescript-json-schema": "^0.53.0"
+  }
+}

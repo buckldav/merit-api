@@ -27,5 +27,7 @@ django-celery-results==2.2.0
 django-celery-beat==2.2.1
 
 # ------------------------------------------------------------------------------
-# Extra
+# ISBNs
 python-stdnum==1.17.0
+# Storing Hex Colors (courses app)
+django-colorfield==0.6.3

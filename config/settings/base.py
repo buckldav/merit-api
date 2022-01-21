@@ -64,6 +64,7 @@ DJANGO_APPS = [
     "django.forms",
 ]
 THIRD_PARTY_APPS = [
+    "colorfield",
     "crispy_forms",
     "rest_framework",
     "rest_framework.authtoken",
@@ -76,6 +77,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "blog",
+    "courses",
     "library.users.apps.UsersConfig",
     "library.library",
     "organizations",
@@ -170,7 +172,7 @@ TEMPLATES = [
         # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        "DIRS": [str(APPS_DIR / "templates")],
+        "DIRS": [str(APPS_DIR / "templates"), STATIC_ROOT],
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
@@ -287,6 +289,7 @@ SWAGGER_SETTINGS = {
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_URLS_REGEX = r"^/api/.*$"
+CORS_ALLOW_ALL_ORIGINS = True
 # Your stuff...
 # ------------------------------------------------------------------------------
 

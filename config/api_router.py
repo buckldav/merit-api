@@ -1,6 +1,7 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 from blog.api.views import CommentViewSet
+from courses.api.views import CourseViewSet
 from library.library.api.views import AuthorView, BookView, CheckoutView, StudentView, TeacherView
 
 from library.users.api.views import UserViewSet
@@ -13,6 +14,7 @@ else:
 
 
 router.register("comments", CommentViewSet)
+router.register("courses", CourseViewSet)
 router.register("projects", ProjectViewSet)
 router.register("library/users", UserViewSet)
 
