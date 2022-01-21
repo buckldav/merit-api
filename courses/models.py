@@ -31,3 +31,6 @@ class Course(models.Model):
     units = models.JSONField()
     tags = models.ManyToManyField(to=CourseTag)
     prereqs = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
