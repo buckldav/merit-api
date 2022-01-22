@@ -5,7 +5,7 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from library.library.api.views import library_schema_view
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -18,6 +18,7 @@ urlpatterns = [
     # User management
     path("users/", include("library.users.urls", namespace="users")),
     path("login/", LoginView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

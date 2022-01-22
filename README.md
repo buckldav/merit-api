@@ -6,3 +6,5 @@ Merit Academy Tech APIs
 
 Test Checkout email, tokens
 CORS
+
+Add comments to each library file to give students credit
