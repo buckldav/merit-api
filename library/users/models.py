@@ -19,4 +19,4 @@ class User(AbstractUser):
             str: URL for user detail.
 
         """
-        return reverse("apiroot", kwargs={"username": self.username})
+        return f"/api/"
