@@ -24,7 +24,7 @@ urlpatterns = [
 # API URLS
 urlpatterns += [
     # API base url
-    path("api/", include("config.api_router")),
+    path("api/", include("config.api_router"), name="apiroot"),
     # Library
     path("api/library/", include("library.library.api.urls")),
     path('library-swagger/', library_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

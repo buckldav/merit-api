@@ -8,6 +8,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from .serializers import *
+from library.library.tasks import send_overdue_email
 from library.library.models import *
 import requests
 import json
@@ -151,6 +152,18 @@ class CheckoutView(generics.ListCreateAPIView):
         if student is not None:
             queryset = queryset.filter(student__id=int(student))
         return queryset
+
+    def create(self, request):
+        serializer = CheckoutSerializer(data=request.data)
+        if serializer.is_valid():
+            checkout = serializer.save()
+            send_overdue_email(checkout)
+        else:
+            import pdb
+            pdb.set_trace()
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class CheckoutDetailView(generics.RetrieveUpdateDestroyAPIView):
