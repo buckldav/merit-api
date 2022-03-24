@@ -30,15 +30,17 @@ class TeacherSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     # Include all the non-editable fields here
     title = serializers.CharField(max_length=60)
-    author = serializers.PrimaryKeyRelatedField(
-        many=False,
-        queryset=Author.objects.all()
-    )
+    # author = serializers.PrimaryKeyRelatedField(
+    #     many=False,
+    #     queryset=Author.objects.all()
+    # )
+    last_name = serializers.CharField(source='author.last_name')
+    first_name = serializers.CharField(source='author.first_name')
     pages = models.IntegerField()
 
     class Meta:
         model = Book
-        fields = "__all__"
+        fields = ("title", "pages", "last_name", "first_name", "call_number", "isbn", "image")
 
 
 class BookCreateSerializer(serializers.ModelSerializer):
