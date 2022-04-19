@@ -157,6 +157,8 @@ class CheckoutView(generics.ListCreateAPIView):
         serializer = CheckoutSerializer(data=request.data)
         if serializer.is_valid():
             checkout = serializer.save()
+            checkout.due_date = datetime.datetime.now() + datetime.timedelta(seconds=300)
+            checkout.save()
             send_overdue_email(checkout)
         else:
             import pdb

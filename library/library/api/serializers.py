@@ -44,7 +44,6 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class BookCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Book
         fields = ("isbn", "call_number")

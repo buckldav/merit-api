@@ -1,5 +1,6 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
+from alumni.api.views import AlumViewSet
 from blog.api.views import CommentViewSet
 from courses.api.views import CourseViewSet
 from library.library.api.views import AuthorView, BookView, CheckoutView, StudentView, TeacherView
@@ -12,7 +13,7 @@ if settings.DEBUG:
 else:
     router = SimpleRouter()
 
-
+router.register("alumni", AlumViewSet)
 router.register("comments", CommentViewSet)
 router.register("courses", CourseViewSet)
 router.register("projects", ProjectViewSet)

@@ -9,7 +9,7 @@ from time import sleep
 
 @app.task(bind=True, base=AbortableTask)
 def send_overdue_email(self, checkout):
-    sleep((checkout.due_date - checkout.checkout_time).total_seconds())
+    #sleep((checkout.due_date - checkout.checkout_time).total_seconds())
     # try to get checkout object from db if exists
     try:
         # print("email!")

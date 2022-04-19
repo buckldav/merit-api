@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "alumni",
     "blog",
     "courses",
     "library.users.apps.UsersConfig",
