@@ -97,7 +97,7 @@ class BookView(generics.ListCreateAPIView):
 
     def list(self, request):
         queryset = self.get_queryset()
-        serializer = BookSerializer(queryset, many=True)
+        serializer = BookReadSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
@@ -120,10 +120,20 @@ class BookView(generics.ListCreateAPIView):
             obj["pages"] = int(data[f"ISBN:{ISBN}"]["number_of_pages"])
         obj["isbn"] = ISBN
         obj["call_number"] = request.data["call_number"]
+
+        first_name = ""
+        last_name = ""
+        if "first_name" in request.data and request.data["first_name"] and "last_name" in request.data and request.data["last_name"]:
+            first_name = request.data["first_name"]
+            last_name = request.data["last_name"]
+        else:
+            first_name = " ".join(data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[0:-1])
+            last_name = data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[-1]
         author = Author.objects.get_or_create(
-            first_name=" ".join(data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[0:-1]),
-            last_name=data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[-1]
+            first_name=first_name,
+            last_name=last_name
         )
+
         obj["author"] = author[0].id
         print(obj)
         serializer = BookSerializer(data=obj)
@@ -134,7 +144,7 @@ class BookView(generics.ListCreateAPIView):
 
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = BookSerializer
+    serializer_class = BookReadSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Book.objects.all()
 
