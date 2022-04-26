@@ -113,7 +113,7 @@ class BookView(generics.ListCreateAPIView):
         data = json.loads(page.content.decode("utf-8"))
 
         obj = {}
-        obj["title"] = data[f"ISBN:{ISBN}"]["title"]
+        obj["title"] = data[f"ISBN:{ISBN}"]["title"].title()
         if "cover" in data[f"ISBN:{ISBN}"]:
             obj["image"] = data[f"ISBN:{ISBN}"]["cover"]["medium"]
         if "number_of_pages" in data[f"ISBN:{ISBN}"]:

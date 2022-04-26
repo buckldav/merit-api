@@ -34,8 +34,8 @@ class BookReadSerializer(serializers.ModelSerializer):
     #     many=False,
     #     queryset=Author.objects.all()
     # )
-    last_name = serializers.CharField(source='author.last_name')
-    first_name = serializers.CharField(source='author.first_name')
+    last_name = serializers.CharField(source='author.last_name', read_only=True)
+    first_name = serializers.CharField(source='author.first_name', read_only=True)
     pages = models.IntegerField()
 
     class Meta:
