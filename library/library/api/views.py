@@ -155,6 +155,8 @@ class CheckoutView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Checkout.objects.all()
+        if self.request.method == "GET":
+            queryset = queryset.filter(checkin_time__isnull=True)
         book = self.request.query_params.get('book')
         student = self.request.query_params.get('student')
         if book is not None:

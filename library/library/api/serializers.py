@@ -37,6 +37,7 @@ class BookReadSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(source='author.last_name', read_only=True)
     first_name = serializers.CharField(source='author.first_name', read_only=True)
     pages = models.IntegerField()
+    image = models.URLField()
 
     class Meta:
         model = Book
