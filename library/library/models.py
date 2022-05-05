@@ -48,11 +48,11 @@ class Book(models.Model):
 
 
 class Checkout(models.Model):
-    book = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    isbn = models.ForeignKey(to=Book, on_delete=models.CASCADE)
     student = models.ForeignKey(to=Student, on_delete=models.CASCADE)
     checkout_time = models.DateTimeField(auto_now_add=True)
     checkin_time = models.DateTimeField(blank=True, null=True)
     due_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.student.last_name}, {self.student.first_name}; {self.book.__str__()}, Due: {self.due_date}'
+        return f'{self.student.last_name}, {self.student.first_name}; {self.isbn.__str__()}, Due: {self.due_date}'
