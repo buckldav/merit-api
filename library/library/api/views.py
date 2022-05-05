@@ -21,6 +21,12 @@ class AuthorView(generics.ListCreateAPIView):
     queryset = Author.objects.all()
 
 
+class AuthorDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = AuthorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Author.objects.all()
+
+
 class StudentView(generics.ListCreateAPIView):
     serializer_class = StudentSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -77,7 +83,7 @@ class TeacherDetailView(generics.RetrieveAPIView):
 
 class BookView(generics.ListCreateAPIView):
     serializer_class = BookCreateSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         queryset = Book.objects.all()
@@ -145,7 +151,7 @@ class BookView(generics.ListCreateAPIView):
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookReadSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Book.objects.all()
 
 
