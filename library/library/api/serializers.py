@@ -71,3 +71,12 @@ class CheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkout
         fields = "__all__"
+
+
+class CheckoutReadSerializer(CheckoutSerializer):
+    book = BookReadSerializer()
+    student = StudentSerializer()
+
+    class Meta:
+        model = Checkout
+        fields = "__all__"

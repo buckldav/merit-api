@@ -156,7 +156,7 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CheckoutView(generics.ListCreateAPIView):
-    serializer_class = CheckoutSerializer
+    serializer_class = CheckoutReadSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
