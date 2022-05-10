@@ -48,7 +48,7 @@ class Book(models.Model):
 
 
 class Checkout(models.Model):
-    isbn = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(to=Book, on_delete=models.CASCADE)
     student = models.ForeignKey(to=Student, on_delete=models.CASCADE)
     checkout_time = models.DateTimeField(auto_now_add=True)
     checkin_time = models.DateTimeField(blank=True, null=True)

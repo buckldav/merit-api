@@ -175,12 +175,13 @@ class CheckoutView(generics.ListCreateAPIView):
         serializer = CheckoutSerializer(data=request.data)
         if serializer.is_valid():
             checkout = serializer.save()
-            checkout.due_date = datetime.datetime.now() + datetime.timedelta(seconds=300)
+            checkout.due_date = datetime.datetime.now() + datetime.timedelta(days=21)
             checkout.save()
-            send_overdue_email(checkout)
+            # send_overdue_email(checkout)
         else:
-            import pdb
-            pdb.set_trace()
+            pass
+            # import pdb
+            # pdb.set_trace()
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
