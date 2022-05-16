@@ -25,6 +25,7 @@ class Project(models.Model):
         choices=TYPES,
         default=REPL,
     )
+    date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.title} - {self.author}"
