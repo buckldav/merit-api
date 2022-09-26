@@ -164,7 +164,7 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CheckoutView(generics.ListCreateAPIView):
-    serializer_class = CheckoutCreateSerializer
+    serializer_class = CheckoutSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -185,7 +185,7 @@ class CheckoutView(generics.ListCreateAPIView):
         return super().get_serializer_class()
 
     def create(self, request):
-        serializer = CheckoutCreateSerializer(data=request.data)
+        serializer = CheckoutSerializer(data=request.data)
         if serializer.is_valid():
             checkout = serializer.save()
             checkout.due_date = datetime.datetime.now() + datetime.timedelta(days=21)
