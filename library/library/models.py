@@ -38,7 +38,9 @@ class Book(models.Model):
     author = models.ForeignKey(to=Author, on_delete=models.CASCADE, editable=False)
     call_number = models.CharField(max_length=10, unique=True)
     copies = models.IntegerField(default=1)
-    teacher = models.ForeignKey(to=Teacher, on_delete=models.CASCADE, blank=True, null=True)
+    teacher = models.ForeignKey(
+        to=Teacher, on_delete=models.CASCADE, blank=True, null=True
+    )
     description = models.TextField(blank=True)
     image = models.URLField(blank=True, null=True)
     pages = models.IntegerField(default=0)
@@ -55,4 +57,4 @@ class Checkout(models.Model):
     due_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.student.last_name}, {self.student.first_name}; {self.isbn.__str__()}, Due: {self.due_date}'
+        return f"{self.student.last_name}, {self.student.first_name}; {self.book.isbn.__str__()}, Due: {self.due_date}"

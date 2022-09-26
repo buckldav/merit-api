@@ -33,10 +33,10 @@ class StudentView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Student.objects.all()
-        first_name = self.request.query_params.get('first_name')
-        last_name = self.request.query_params.get('last_name')
-        idnum = self.request.query_params.get('id')
-        email = self.request.query_params.get('email')
+        first_name = self.request.query_params.get("first_name")
+        last_name = self.request.query_params.get("last_name")
+        idnum = self.request.query_params.get("id")
+        email = self.request.query_params.get("email")
         if first_name is not None:
             queryset = queryset.filter(first_name__icontains=first_name)
         if last_name is not None:
@@ -60,10 +60,10 @@ class TeacherView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Teacher.objects.all()
-        first_name = self.request.query_params.get('first_name')
-        last_name = self.request.query_params.get('last_name')
-        email = self.request.query_params.get('email')
-        room_number = self.request.query_params.get('room_number')
+        first_name = self.request.query_params.get("first_name")
+        last_name = self.request.query_params.get("last_name")
+        email = self.request.query_params.get("email")
+        room_number = self.request.query_params.get("room_number")
         if first_name is not None:
             queryset = queryset.filter(first_name__icontains=first_name)
         if last_name is not None:
@@ -87,10 +87,10 @@ class BookView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Book.objects.all()
-        title = self.request.query_params.get('title')
-        author = self.request.query_params.get('author')
-        barcode = self.request.query_params.get('barcode')
-        call_number = self.request.query_params.get('call_number')
+        title = self.request.query_params.get("title")
+        author = self.request.query_params.get("author")
+        barcode = self.request.query_params.get("barcode")
+        call_number = self.request.query_params.get("call_number")
         if title is not None:
             queryset = queryset.filter(title__icontains=title)
         if author is not None:
@@ -129,15 +129,21 @@ class BookView(generics.ListCreateAPIView):
 
         first_name = ""
         last_name = ""
-        if "first_name" in request.data and request.data["first_name"] and "last_name" in request.data and request.data["last_name"]:
+        if (
+            "first_name" in request.data
+            and request.data["first_name"]
+            and "last_name" in request.data
+            and request.data["last_name"]
+        ):
             first_name = request.data["first_name"]
             last_name = request.data["last_name"]
         else:
-            first_name = " ".join(data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[0:-1])
+            first_name = " ".join(
+                data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[0:-1]
+            )
             last_name = data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[-1]
         author = Author.objects.get_or_create(
-            first_name=first_name,
-            last_name=last_name
+            first_name=first_name, last_name=last_name
         )
 
         obj["author"] = author[0].id
@@ -146,7 +152,9 @@ class BookView(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -156,23 +164,28 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CheckoutView(generics.ListCreateAPIView):
-    serializer_class = CheckoutReadSerializer
+    serializer_class = CheckoutCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         queryset = Checkout.objects.all()
         if self.request.method == "GET":
             queryset = queryset.filter(checkin_time__isnull=True)
-        book = self.request.query_params.get('book')
-        student = self.request.query_params.get('student')
+        book = self.request.query_params.get("book")
+        student = self.request.query_params.get("student")
         if book is not None:
             queryset = queryset.filter(book__title__icontains=book)
         if student is not None:
             queryset = queryset.filter(student__id=int(student))
         return queryset
 
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return CheckoutReadSerializer
+        return super().get_serializer_class()
+
     def create(self, request):
-        serializer = CheckoutSerializer(data=request.data)
+        serializer = CheckoutCreateSerializer(data=request.data)
         if serializer.is_valid():
             checkout = serializer.save()
             checkout.due_date = datetime.datetime.now() + datetime.timedelta(days=21)
@@ -180,11 +193,11 @@ class CheckoutView(generics.ListCreateAPIView):
             # send_overdue_email(checkout)
         else:
             pass
-            # import pdb
-            # pdb.set_trace()
 
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 class CheckoutDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -196,14 +209,12 @@ class CheckoutDetailView(generics.RetrieveUpdateDestroyAPIView):
 library_schema_view = get_schema_view(
     openapi.Info(
         title="Library API",
-        default_version='v1',
+        default_version="v1",
         description="Merit Academy Library API",
         contact=openapi.Contact(email="david.buckley@meritacademy.org"),
         license=openapi.License(name="BSD License"),
     ),
-    patterns=[
-        path("api/library/", include("library.library.api.urls"))
-    ],
+    patterns=[path("api/library/", include("library.library.api.urls"))],
     public=False,
     permission_classes=(permissions.IsAuthenticated,),
 )
