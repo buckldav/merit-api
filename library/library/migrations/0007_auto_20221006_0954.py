@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="book",
             name="merit_barcode",
-            field=models.CharField(max_length=10),
+            field=models.CharField(max_length=10, default="1"),
         ),
         migrations.AlterField(
             model_name="book",
