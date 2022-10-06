@@ -13,14 +13,22 @@ admin.site.register(Checkout)
 
 
 class BookAdmin(admin.ModelAdmin):
-    fields = ['isbn', 'call_number']
+    fields = ["isbn", "call_number"]
 
     def add_view(self, request, extra_content=None):
         self.fields = ["isbn", "call_number"]
         return super(BookAdmin, self).add_view(request)
 
     def change_view(self, request, object_id, extra_content=None):
-        self.fields = ["author", "title", "call_number", "copies", "image", "pages"]
+        self.fields = [
+            "author",
+            "title",
+            "call_number",
+            "merit_barcode",
+            "copies",
+            "image",
+            "pages",
+        ]
         self.readonly_fields = ["author", "title", "pages"]
         return super(BookAdmin, self).change_view(request, object_id)
 
@@ -33,7 +41,9 @@ class BookAdmin(admin.ModelAdmin):
                 ISBN = ISBN[0:3] + "-" + ISBN[3:]
                 ISBN = to_isbn10(ISBN).strip("-")
 
-            URL = f"https://openlibrary.org/api/books.json?jscmd=data&bibkeys=ISBN:{ISBN}"
+            URL = (
+                f"https://openlibrary.org/api/books.json?jscmd=data&bibkeys=ISBN:{ISBN}"
+            )
             page = requests.get(URL)
             data = json.loads(page.content.decode("utf-8"))
 
@@ -45,8 +55,10 @@ class BookAdmin(admin.ModelAdmin):
             obj.isbn = ISBN
             obj.call_number = form.cleaned_data["call_number"]
             author = Author.objects.get_or_create(
-                first_name=" ".join(data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[0:-1]),
-                last_name=data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[-1]
+                first_name=" ".join(
+                    data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[0:-1]
+                ),
+                last_name=data[f"ISBN:{ISBN}"]["authors"][0]["name"].split()[-1],
             )
             obj.author = author[0]
 

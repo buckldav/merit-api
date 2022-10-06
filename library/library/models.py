@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from random import randint
 
 
 class Author(models.Model):
@@ -36,7 +37,8 @@ class Book(models.Model):
     title = models.CharField(max_length=60, editable=False)
     isbn = models.CharField(primary_key=True, max_length=13)
     author = models.ForeignKey(to=Author, on_delete=models.CASCADE, editable=False)
-    call_number = models.CharField(max_length=10, unique=True)
+    call_number = models.CharField(max_length=10)
+    merit_barcode = models.CharField(max_length=10)  # unique
     copies = models.IntegerField(default=1)
     teacher = models.ForeignKey(
         to=Teacher, on_delete=models.CASCADE, blank=True, null=True

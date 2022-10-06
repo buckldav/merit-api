@@ -48,6 +48,7 @@ class BookReadSerializer(serializers.ModelSerializer):
             "first_name",
             "author",
             "call_number",
+            "merit_barcode",
             "isbn",
             "image",
         )
